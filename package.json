@@ -1,0 +1,10 @@
+{
+  "name": "waste-management",
+  "type": "module",
+  "version": "1.0.0",
+  "dependencies": {
+    "@influxdata/influxdb3-client": "^0.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}

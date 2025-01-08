@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste Management Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Dark mode variables */
+        [data-theme="dark"] {
+            --primary-color: #3949ab;
+            --secondary-color: #303f9f;
+            --accent-color: #5c6bc0;
+            --background-color: #2d2d2d;
+            --card-bg: #1e1e1e;
+            --text-color: #ffffff;
+            --text-muted: #aaaaaa;
+            --border-color: #333333;
+        }
+
+        /* Light mode (default) variables */
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #283593;
+            --accent-color: #3949ab;
+            --background-color: #f5f7ff;
+            --card-bg: #ffffff;
+            --text-color: #000000;
+            --text-muted: #666666;
+            --border-color: #dddddd;
+        }
+
+        /* Base styles */
+        body {
+            /* background-color: var(--background-color) !important; */
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-header {
+            padding: 2rem 0;
+            background-color: #124e66;
+            margin-bottom: 2rem;
+            /* border-bottom: 1px solid var(--border-color); */
+            color: #ffffff;
+        }
+
+        .stats-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .data-table {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-title {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-value {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .stats-icon {
+            font-size: 2rem;
+            color: var(--accent-color);
+        }
+
+        .table {
+            color: var(--text-color);
+        }
+
+        .table thead th {
+            background-color: var(--secondary-color);
+            color: #ffffff;
+            border-color: var(--border-color);
+        }
+
+        .table td {
+            border-color: var(--border-color);
+        }
+
+        /* Theme toggle button */
+        .theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        /* Waste type badges */
+        .waste-type {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.875rem;
+        }
+
+        .type-Plastic {
+            background-color: #bbdefb;
+            color: #1565c0;
+        }
+
+        .type-Paper {
+            background-color: #ffecb3;
+            color: #ff8f00;
+        }
+
+        .type-Other {
+            background-color: #e0e0e0;
+            color: #424242;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle">
+        <i class="bi bi-sun-fill" id="themeIcon"></i>
+    </button>
+
+    <div class="dashboard-header">
+        <div class="container">
+            <h1><i class="bi bi-recycle me-2"></i>Waste Management Dashboard</h1>
+            <p class="mb-0">Real-time waste collection monitoring system</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Statistics Cards -->
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="stats-title">Total Bins</div>
+                            <div class="stats-value" id="totalBins">1</div>
+                        </div>
+                        <i class="bi bi-trash stats-icon"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="stats-title">Total Collections</div>
+                            <div class="stats-value" id="totalCollections">-</div>
+                        </div>
+                        <i class="bi bi-collection stats-icon"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="stats-title">Most Common Type</div>
+                            <div class="stats-value" id="commonType">-</div>
+                        </div>
+                        <i class="bi bi-star stats-icon"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stats-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="stats-title">Last Update</div>
+                            <div class="stats-value" id="lastUpdate">-</div>
+                        </div>
+                        <i class="bi bi-clock-history stats-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <h4>Waste Distribution</h4>
+                    <canvas id="wasteDistributionChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="data-table">
+            <h4>Recent Collections</h4>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Bin ID</th>
+                            <th>Type</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="wasteData">
+                        <!-- Data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let lastKnownUpdate = 0;
+        let wasteDistributionChart;
+
+        function initializeCharts() {
+            // Waste Distribution Chart
+            const wasteCtx = document.getElementById('wasteDistributionChart').getContext('2d');
+            wasteDistributionChart = new Chart(wasteCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Plastic', 'Paper', 'Other'],
+                    datasets: [{
+                        data: [30, 30, 40],
+                        backgroundColor: ['#1565c0', '#ffee00', '#686868']
+                    }]
+                },
+                options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateCharts(data) {
+            // Update Waste Distribution Chart
+            const wasteCounts = {
+                'Plastic': 0,
+                'Paper': 0,
+                'Other': 0
+            };
+
+            data.forEach(item => {
+                wasteCounts[item.wasteType] = (wasteCounts[item.wasteType] || 0) + 1;
+                // console.log(wasteCounts);
+            });
+
+            wasteDistributionChart.data.datasets[0].data = [
+                wasteCounts['Plastic'],
+                wasteCounts['Paper'],
+                wasteCounts['Other']
+            ];
+            console.log(wasteDistributionChart.data.datasets[0].data);
+            wasteDistributionChart.update();
+        }
+
+        async function checkForUpdates() {
+            try {
+                const response = await fetch('http://localhost:3000/api/last-update');
+                const data = await response.json();
+                if (data.timestamp > lastKnownUpdate) {
+                    lastKnownUpdate = data.timestamp;
+                    await fetchAndDisplayData();
+                }
+            } catch (error) {
+                console.error('Error checking for updates:', error);
+            }
+        }
+
+        async function fetchAndDisplayData() {
+            const tableBody = document.getElementById('wasteData');
+            
+            try {
+                const response = await fetch('http://localhost:3000/api/waste-data');
+                const data = await response.json();
+                
+                // Update statistics
+                document.getElementById('totalBins').textContent = new Set(data.map(item => item.binId)).size;
+                document.getElementById('totalCollections').textContent = data.length;
+                document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+
+                // Find most common waste type
+                const typeCounts = {};
+                data.forEach(item => {
+                    typeCounts[item.wasteType] = (typeCounts[item.wasteType] || 0) + 1;
+                });
+                const commonType = Object.entries(typeCounts).sort((a, b) => b[1] - a[1])[0][0];
+                document.getElementById('commonType').textContent = commonType;
+
+                // Update charts
+                updateCharts(data);
+                
+                // Update table
+                tableBody.innerHTML = '';
+                
+                // Add each row of data
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.binId}</td>
+                        <td><span class="waste-type type-${item.wasteType}">${item.wasteType}</span></td>
+                        <td>${new Date(item.time).toLocaleString()}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error:', error);
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="3" style="text-align: center; color: red;">
+                            Error fetching data. Please try again.
+                        </td>
+                    </tr>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeCharts();
+            fetchAndDisplayData();
+            setInterval(checkForUpdates, 2000);
+        });
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+        updateBodyBackground(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+            updateBodyBackground(newTheme);
+
+            // Update charts with new theme colors if they exist
+            if (typeof wasteDistributionChart !== 'undefined') {
+                updateChartsTheme(newTheme);
+            }
+        });
+
+        function updateBodyBackground(theme) {
+            const backgroundColor = theme === 'dark' ? '#2d2d2d' : '#f5f7ff';
+            document.body.style.backgroundColor = backgroundColor;
+        }
+
+        function updateThemeIcon(theme) {
+            themeIcon.className = theme === 'dark' ? 'bi bi-moon-fill' : 'bi bi-sun-fill';
+        }
+
+        function updateChartsTheme(theme) {
+            // const textColor = theme === 'dark' ? '#ffffff' : '#000000';
+            
+            // Update chart text colors
+            Chart.defaults.color = textColor;
+            
+            // Update existing charts
+            if (wasteDistributionChart) {
+                wasteDistributionChart.options.plugins.legend.labels.color = textColor;
+                wasteDistributionChart.update();
+            }
+            
+            if (collectionsTimelineChart) {
+                collectionsTimelineChart.options.scales.x.ticks.color = textColor;
+                collectionsTimelineChart.options.scales.y.ticks.color = textColor;
+                collectionsTimelineChart.options.scales.x.title.color = textColor;
+                collectionsTimelineChart.options.scales.y.title.color = textColor;
+                collectionsTimelineChart.update();
+            }
+        }
+
+        // Update charts theme on initial load
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            updateChartsTheme(currentTheme);
+        });
+    </script>
+</body>
+</html> 
