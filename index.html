@@ -1,0 +1,426 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>CashCrow - Admin Dashboard</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
+        
+        <link rel="stylesheet" href="plugins/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+        <link rel="stylesheet" href="plugins/icon-kit/dist/css/iconkit.min.css">
+        <link rel="stylesheet" href="plugins/ionicons/dist/css/ionicons.min.css">
+        <link rel="stylesheet" href="plugins/perfect-scrollbar/css/perfect-scrollbar.css">
+        <link rel="stylesheet" href="plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap.css">
+        <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css">
+        <link rel="stylesheet" href="plugins/weather-icons/css/weather-icons.min.css">
+        <link rel="stylesheet" href="plugins/c3/c3.min.css">
+        <link rel="stylesheet" href="plugins/owl.carousel/dist/assets/owl.carousel.min.css">
+        <link rel="stylesheet" href="plugins/owl.carousel/dist/assets/owl.theme.default.min.css">
+        <link rel="stylesheet" href="dist/css/theme.min.css">
+        <script src="src/js/vendor/modernizr-2.8.3.min.js"></script>
+    </head>
+
+    <body style="background-color: #F6F7FB;">
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div class="wrapper">
+            <header class="header-top" header-theme="dark" style="padding-left: 20px;">
+                <div class="container-fluid">
+                    <div class="d-flex justify-content-between">
+                        <p class="h3" style="margin: 0; font-weight: bold; color: white;">CashCrow</p>
+                        <div class="top-menu d-flex align-items-center">
+                            <div class="dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="notiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-bell"></i><span class="badge bg-danger">3</span></a>
+                                <div class="dropdown-menu dropdown-menu-right notification-dropdown" aria-labelledby="notiDropdown">
+                                    <h4 class="header">Notifications</h4>
+                                    <div class="notifications-wrap">
+                                        <a href="#" class="media">
+                                            <span class="d-flex">
+                                                <i class="ik ik-check"></i> 
+                                            </span>
+                                            <span class="media-body">
+                                                <span class="heading-font-family media-heading">Invitation accepted</span> 
+                                                <span class="media-content">Your have been Invited ...</span>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="media">
+                                            <span class="d-flex">
+                                                <img src="img/users/1.jpg" class="rounded-circle" alt="">
+                                            </span>
+                                            <span class="media-body">
+                                                <span class="heading-font-family media-heading">Steve Smith</span> 
+                                                <span class="media-content">I slowly updated projects</span>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="media">
+                                            <span class="d-flex">
+                                                <i class="ik ik-calendar"></i> 
+                                            </span>
+                                            <span class="media-body">
+                                                <span class="heading-font-family media-heading">To Do</span> 
+                                                <span class="media-content">Meeting with Nathan on Friday 8 AM ...</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="footer"><a href="javascript:void(0);">See all activity</a></div>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar" src="img/user.jpg" alt=""></a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="pages/profile.html"><i class="ik ik-user dropdown-icon"></i> Profile</a>
+                                    <a class="dropdown-item" href="#"><i class="ik ik-settings dropdown-icon"></i> Settings</a>
+                                    <a class="dropdown-item" href="login.html"><i class="ik ik-power dropdown-icon"></i> Logout</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="main-content" style="margin-top: 100px;">
+                <div class="container-fluid">
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="widget bg-primary">
+                                <div class="widget-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="state">
+                                            <h6>Total Bins</h6>
+                                            <h2 id="totalBins">5</h2>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ik ik-trash-2"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="widget bg-success">
+                                <div class="widget-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="state">
+                                            <h6>Total Waste</h6>
+                                            <h2 id="totalCollections">200 Kg</h2>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ik ik-truck"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="widget bg-warning">
+                                <div class="widget-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="state">
+                                            <h6>Most Common Waste</h6>
+                                            <h2 id="commonType">Plastic</h2>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ik ik-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="widget bg-danger">
+                                <div class="widget-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="state">
+                                            <h6>CO2 Emission Savings</h6>
+                                            <h2>11%</h2>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ik ik-trending-up"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card" style="min-height: 422px;">
+                                <div class="card-header"><h3>Waste Categories</h3></div>
+                                <div class="card-body">
+                                    <div id="c3-donut-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-8 col-md-8">
+                            <div class="card table-card">
+                                <div class="card-header">
+                                    <h3>Bin Data</h3>
+                                </div>
+                                <div class="card-block">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Location</th>
+                                                    <th>Paper Count</th>
+                                                    <th>Plastic Count</th>
+                                                    <th>Other Count</th>
+                                                    <th>Fill Level</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="binStatusTable">
+                                                <!-- Dynamic content will be inserted here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12">
+                        <div class="card table-card">
+                            <div class="card-header">
+                                <h3>Realtime Logs</h3>
+                            </div>
+                            <div class="card-block">
+                                <div class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Waste Type</th>
+                                                <th>Fill Level</th>
+                                                <th>Time</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="wasteData">
+                                            <!-- Dynamic content will be inserted here -->                  
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>    
+               
+        <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+        <script>window.jQuery || document.write('<script src="src/js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+        <script src="plugins/popper.js/dist/umd/popper.min.js"></script>
+        <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
+        <!-- <script src="plugins/screenfull/dist/screenfull.js"></script>
+        <script src="plugins/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+        <script src="plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script> -->
+        <!-- <script src="plugins/jvectormap/jquery-jvectormap.min.js"></script> -->
+        <!-- <script src="plugins/jvectormap/tests/assets/jquery-jvectormap-world-mill-en.js"></script> -->
+        <!-- <script src="plugins/moment/moment.js"></script> -->
+        <!-- <script src="plugins/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js"></script> -->
+        <script src="plugins/d3/dist/d3.min.js"></script>
+        <script src="plugins/c3/c3.min.js"></script>
+        <script src="piechart.js"></script>
+        <script src="dist/js/theme.min.js"></script>
+
+
+        <script>
+            let lastKnownUpdate = 0;
+            async function checkForUpdates() {
+                try {
+                    const response = await fetch('http://localhost:3000/api/last-update');
+                    const data = await response.json();
+                    if (data.timestamp > lastKnownUpdate) {
+                        lastKnownUpdate = data.timestamp;
+                        await fetchAndDisplayData();
+                    }
+                } catch (error) {
+                    console.error('Error checking for updates:', error);
+                }
+            }
+
+            async function fetchAndDisplayData() {
+                const tableBody = document.getElementById('wasteData');
+                
+                try {
+                    const response = await fetch('http://localhost:3000/api/waste-data');
+                    const data = await response.json();
+                    
+                    // Create an object to store counts by bin and waste type
+                    const binWasteCounts = {};
+                    
+                    // Count waste types for each bin
+                    data.forEach(item => {
+                        if (!binWasteCounts[item.binId]) {
+                            binWasteCounts[item.binId] = {
+                                Plastic: 0,
+                                Paper: 0,
+                                Other: 0
+                            };
+                        }
+                        binWasteCounts[item.binId][item.wasteType]++;
+                    });
+                    
+                    // Update the donut chart with new data
+                    updateDonutChart(binWasteCounts);
+                    
+                    // Log the counts for each bin
+                    console.log('Waste counts by bin:', binWasteCounts);
+                    
+                    // You can also display these counts in your table
+                    Object.entries(binWasteCounts).forEach(([binId, counts]) => {
+                        console.log(`Bin ${binId}:`);
+                        console.log(`- Plastic: ${counts.Plastic}`);
+                        console.log(`- Paper: ${counts.Paper}`);
+                        console.log(`- Other: ${counts.Other}`);
+                    });
+
+                    // Update statistics
+                    document.getElementById('totalBins').textContent = new Set(data.map(item => item.binId)).size;
+                    document.getElementById('totalCollections').textContent = data.length;
+                    // document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+
+                    // Find most common waste type
+                    const typeCounts = {};
+                    data.forEach(item => {
+                        typeCounts[item.wasteType] = (typeCounts[item.wasteType] || 0) + 1;
+                    });
+                    const commonType = Object.entries(typeCounts).sort((a, b) => b[1] - a[1])[0][0];
+                    document.getElementById('commonType').textContent = commonType;
+                    
+                    // Update table
+                    tableBody.innerHTML = '';
+                    
+                    // Add each row of data
+                    data.forEach(item => {
+                        const row = document.createElement('tr');
+                        let badgeClass = '';
+                        
+                        // Determine badge class based on waste type
+                        switch(item.wasteType) {
+                            case 'Plastic':
+                                badgeClass = 'badge-primary';
+                                break;
+                            case 'Paper':
+                                badgeClass = 'badge-success';
+                                break;
+                            case 'Other':
+                                badgeClass = 'badge-danger';
+                                break;
+                        }
+                        
+                        row.innerHTML = `
+                            <td>${item.binId}</td>
+                            <td><label class="badge ${badgeClass}">${item.wasteType}</label></td>
+                            <td>${item.fillLevel}</td>
+                            <td>${new Date(item.time).toLocaleString()}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+
+                    // Update the bin status table
+                    const binStatusTable = document.getElementById('binStatusTable');
+                    binStatusTable.innerHTML = '';
+
+                    // Define location mapping (you might want to store this in a database in a real application)
+                    const binLocations = {
+                        '001': 'Cafeteria',
+                        '002': 'Library',
+                        '003': 'Gym',
+                        '004': 'Library',
+                        '005': 'Main Entrance'
+                    };
+
+                    // Define all possible bins
+                    const allBinIds = ['001', '002', '003', '004', '005'];
+
+                    // Ensure binWasteCounts has entries for all bins
+                    allBinIds.forEach(binId => {
+                        if (!binWasteCounts[binId]) {
+                            binWasteCounts[binId] = {
+                                Plastic: 0,
+                                Paper: 0,
+                                Other: 0
+                            };
+                        }
+                    });
+
+                    // Create rows for ALL bins (not just the ones in binWasteCounts)
+                    allBinIds.forEach(binId => {
+                        const row = document.createElement('tr');
+                        const counts = binWasteCounts[binId];
+                        
+                        // Get the most recent entry for this bin by sorting the data
+                        const recentData = data
+                            .filter(item => item.binId === binId)
+                            .sort((a, b) => new Date(b.time) - new Date(a.time))[0];
+                        
+                        // If no recent data, bin is offline
+                        //Only active for 1 hour && (new Date() - new Date(recentData.time)) < 3600000
+                        const isActive = recentData ;
+                        const statusBadge = isActive ? 
+                            '<label class="badge badge-success">Active</label>' : 
+                            '<label class="badge badge-danger">Offline</label>';
+                        
+                        // Fill level will be 0% if no recent data
+                        const latestFillLevel = recentData ? 
+                            (typeof recentData.fillLevel === 'number' ? 
+                                `${recentData.fillLevel.toFixed(2)}%` : 
+                                recentData.fillLevel || "0%") : 
+                            "0%";
+                        
+                        row.innerHTML = `
+                            <td>${binId}</td>
+                            <td>${binLocations[binId] || 'Unknown Location'}</td>
+                            <td>${counts.Paper || 0}</td>
+                            <td>${counts.Plastic || 0}</td>
+                            <td>${counts.Other || 0}</td>
+                            <td>${latestFillLevel}</td>
+                            <td>${statusBadge}</td>
+                        `;
+                        
+                        binStatusTable.appendChild(row);
+                    });
+
+                    updateDonutChart(binWasteCounts);
+                } catch (error) {
+                    console.error('Error:', error);
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="4" style="text-align: center; color: red;">
+                                Error fetching data. Please try again.
+                            </td>
+                        </tr>`;
+                    binStatusTable.innerHTML = `
+                        <tr>
+                            <td colspan="7" style="text-align: center; color: red;">
+                                Error fetching data. Please try again.
+                            </td>
+                        </tr>`;
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                // initializeCharts();
+                fetchAndDisplayData();
+                setInterval(checkForUpdates, 2000);
+            });
+        </script>
+    </body>
+</html>

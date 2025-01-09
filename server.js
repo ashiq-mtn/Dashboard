@@ -1,12 +1,12 @@
 import express from 'express';
-import { fetchWasteData } from './querytry.js';
+import { fetchWasteData } from './readData.js';
 import cors from 'cors';
 
 const app = express();
 const port = 3000;
 
 app.use(cors());
-app.use(express.static('public'));
+app.use(express.static('./'));
 
 // Store the last update time
 let lastUpdateTime = new Date().getTime();
