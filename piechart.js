@@ -7,6 +7,12 @@ let c3DonutChart;
         data: {
             columns: [],
             type: 'donut',
+            empty: {
+                label: {
+                    text: "Error fetching data. Please try again.",
+                    position: 'middle'
+                }
+            },
             onclick: function(d, i) {
                 console.log("onclick", d, i);
             },
@@ -31,6 +37,16 @@ let c3DonutChart;
                 format: function(value) {
                     return value + '%';
                 }
+            }
+        },
+        onrendered: function() {
+            // Style the empty text after chart is rendered
+            const emptyText = d3.select('#c3-donut-chart .c3-empty');
+            if (emptyText.size() > 0) {
+                emptyText
+                    .style('fill', '#FE403D')
+                    .style('font-weight', 'medium')
+                    .style('font-size', '14px');
             }
         }
     });
